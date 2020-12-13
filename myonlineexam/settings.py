@@ -37,16 +37,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #         error_msg = 'Set the {} environment variable'.format(env_variable)
 #         raise ImproperlyConfigured(error_msg)
 
-# SECRET_KEY = get_env_value("SECRET_KEY")
+# SECRET_KEY = "qolwvjicds5p53gvod1pyrz*%ykjw&a^&c4moab!w=&16ou7"
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-env = environ.Env()
-environ.Env.read_env()
-SECRET_KEY = env.str('SECRET_KEY')
+# env = environ.Env()
+# environ.Env.read_env()
+# SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
-# DEBUG = True
+# DEBUG = env.bool('DEBUG', default=False)
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
