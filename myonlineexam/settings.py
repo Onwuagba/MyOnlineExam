@@ -1,5 +1,7 @@
 import os
 from django.core.exceptions import ImproperlyConfigured
+import environ
+from datetime import timedelta
 """
 Django settings for myonlineexam project.
 
@@ -38,8 +40,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = get_env_value("SECRET_KEY")
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+env = environ.Env()
+environ.Env.read_env()
+SECRET_KEY = env.str('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
+# DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
@@ -57,6 +64,7 @@ INSTALLED_APPS = [
     'app_auth',
     # 'djangorestframework-simplejwt',
     'rest_framework_simplejwt',
+    'drf_yasg',
     # 'rest_framework.authtoken',
 ]
 
@@ -89,6 +97,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myonlineexam.wsgi.application'
+
+# Json Web token Settings
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+}
 
 
 # Database
@@ -149,6 +162,9 @@ AUTH_USER_MODEL = 'app_auth.User'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT  =  BASE_DIR / 'staticfiles' 
+MEDIA_ROOT= BASE_DIR / 'media/'
+MEDIA_URL= "/media/"
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
